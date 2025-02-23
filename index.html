@@ -81,5 +81,25 @@
 
       {% endif %}
     </div>
+    <input type="file" id="imageUpload">
+<button onclick="uploadImage()">Remove Background</button>
+<img id="outputImage" style="display: none;">
+  <script>
+function uploadImage() {
+    let formData = new FormData();
+    formData.append("image", document.getElementById("imageUpload").files[0]);
+
+    fetch("https://image-bg-remover.onrender.com/", {  // Change URL
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        let imgUrl = URL.createObjectURL(blob);
+        document.getElementById("outputImage").src = imgUrl;
+        document.getElementById("outputImage").style.display = "block";
+    });
+}
+</script>
   </body>
 </html>
